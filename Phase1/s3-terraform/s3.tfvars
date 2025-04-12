@@ -1,0 +1,1 @@
+bucket_name = "gabi-phase1-s3-bucket"
