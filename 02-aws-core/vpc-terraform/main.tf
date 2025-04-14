@@ -161,7 +161,15 @@ resource "aws_instance"  "web" {
     instance_type          = var.instance_type
     subnet_id              = aws_subnet.public[0].id
     vpc_security_group_ids = [aws_security_group.web_sg.id]
-    user_data              = file("./user-data/web.sh")
+    # user_data              = file("./user-data/web.sh")
+    user_data = <<-EOF
+            #!/bin/bash
+            dnf update -y
+            dnf install -y httpd
+            systemctl enable httpd
+            systemctl start httpd
+            echo "<h1>Welcome to the Web Server</h1>" > /var/www/html/index.html
+            EOF
     key_name               = "CharlesDataOps1"
 
     tags = {
@@ -174,8 +182,16 @@ resource "aws_instance"  "db" {
     instance_type          = var.instance_type
     subnet_id              = aws_subnet.private[0].id
     vpc_security_group_ids = [aws_security_group.db_sg.id]
-    user_data              = file("user-data/db.sh")
+    # user_data              = file("user-data/db.sh")
+    user_data = <<-EOF
+            #!/bin/bash
+            dnf update -y
+            dnf install -y mariadb-server
+            systemctl enable mariadb
+            systemctl start mariadb
+            EOF
 
+    key_name               = "CharlesDataOps1"
     tags = {
         Name = "${var.project_name}-db-instance"
     }   
