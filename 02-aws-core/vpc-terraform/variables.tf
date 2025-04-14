@@ -28,3 +28,18 @@ variable "availability_zones" {
   description = "List of availability zones"
   type        = list(string)
 }
+
+variable "web_ami" {
+  description = "AMI ID for web tier"
+  type        = string
+}
+
+variable "db_ami" {
+  description = "AMI ID for db tier"
+  type        = string
+}
+
+variable "instance_type" {
+  description = "Instance type for the EC2 instances"
+  type        = string
+}
