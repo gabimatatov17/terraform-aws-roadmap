@@ -143,6 +143,13 @@ resource "aws_security_group" "db_sg" {
         protocol           = "tcp"
         security_groups = [aws_security_group.web_sg.id]
     }
+    ingress {
+        from_port       = 22
+        to_port         = 22
+        protocol        = "tcp"
+        security_groups = [aws_security_group.web_sg.id]
+        description     = "Allow SSH from web SG"
+    }
 
     egress {
         from_port   = 0
@@ -161,6 +168,8 @@ resource "aws_instance"  "web" {
     instance_type          = var.instance_type
     subnet_id              = aws_subnet.public[0].id
     vpc_security_group_ids = [aws_security_group.web_sg.id]
+    depends_on             = [aws_instance.db]
+
     # user_data              = file("./user-data/web.sh")
     user_data = <<-EOF
             #!/bin/bash
@@ -186,7 +195,7 @@ resource "aws_instance"  "db" {
     user_data = <<-EOF
             #!/bin/bash
             dnf update -y
-            dnf install -y mariadb-server
+            dnf install -y mariadb105-server
             systemctl enable mariadb
             systemctl start mariadb
             EOF
