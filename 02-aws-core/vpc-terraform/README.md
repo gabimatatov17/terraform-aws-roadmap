@@ -8,7 +8,7 @@ This project sets up a VPC with public and private subnets, EC2 instances for we
 
 ## 📦 Requirements
 
-- Terraform >= 1.9.5
+- Terraform >= 1.11.4
 - AWS CLI configured
 - Access to an AWS account
 
