@@ -58,12 +58,12 @@ terraform apply planfile.planfile
 ```
 
 5. **Copy state file to s3 beckend bucket**
+**For future terraform updates start from this step to init state from backend, then plan/apply.**
 
 ```bash
 cp backend/s3-backend.tf .
 terraform init -reconfigure
 ```
-**For future terraform updates start from this step to init state from backend, then plan/apply.**
 
 6. **Verify**
    - Check S3 bucket for `terraform.tfstate`
