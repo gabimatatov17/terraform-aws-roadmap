@@ -6,9 +6,9 @@ resource "aws_s3_bucket" "tf_state" {
     Name        = "${var.project_name}-tf-state-bucket"
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
+#   lifecycle {
+#     prevent_destroy = true
+#   }
 }
 
 #### Enable versioning for the S3 bucket ####

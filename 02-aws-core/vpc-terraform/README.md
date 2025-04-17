@@ -47,16 +47,25 @@ cd <project_dir>
 3. **Initialize Terraform**
 
 ```bash
-terraform init -reconfigure
+terraform init
+terraform plan -var-file=vpc.tfvars -out=planfile.planfile
 ```
 
 4. **Deploy the infrastructure**
 
 ```bash
-terraform apply
+terraform apply planfile.planfile
 ```
 
-5. **Verify**
+5. **Copy state file to s3 beckend bucket**
+
+```bash
+cp backend/s3-backend.tf .
+terraform init -reconfigure
+```
+For future terraform updates start from this step to init state from backend, then plan/apply.
+
+6. **Verify**
    - Check S3 bucket for `terraform.tfstate`
    - SSH to the web server (if SSH rule is in place)
    - Access public IP in browser (web server)
